@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Search, Menu, User } from "lucide-react";
 import { Input } from "@/components/ui/input";

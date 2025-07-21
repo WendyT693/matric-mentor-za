@@ -1,10 +1,27 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { GraduationCap, Search, BookOpen, Award } from "lucide-react";
+import SearchResults from "./SearchResults";
 
 const HeroSection = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedField, setSelectedField] = useState("");
+  const [selectedProvince, setSelectedProvince] = useState("");
+  const [showResults, setShowResults] = useState(false);
+
+  const handleSearch = () => {
+    setShowResults(true);
+  };
+
+  const handleInputChange = (value: string) => {
+    setSearchQuery(value);
+    if (value.length > 0) {
+      setShowResults(true);
+    }
+  };
   return (
     <section className="relative bg-gradient-hero text-white py-16 md:py-24 overflow-hidden">
       {/* Background Image */}
@@ -42,6 +59,8 @@ const HeroSection = () => {
                   <Input 
                     placeholder="e.g. UCT, Engineering, Medicine"
                     className="pl-10"
+                    value={searchQuery}
+                    onChange={(e) => handleInputChange(e.target.value)}
                   />
                 </div>
               </div>
@@ -50,11 +69,12 @@ const HeroSection = () => {
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Field of Study
                 </label>
-                <Select>
+                <Select value={selectedField} onValueChange={setSelectedField}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select field" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-card border border-border shadow-lg z-50">
+                    <SelectItem value="all">All Fields</SelectItem>
                     <SelectItem value="engineering">Engineering</SelectItem>
                     <SelectItem value="medicine">Medicine & Health</SelectItem>
                     <SelectItem value="business">Business & Commerce</SelectItem>
@@ -71,26 +91,31 @@ const HeroSection = () => {
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Province
                 </label>
-                <Select>
+                <Select value={selectedProvince} onValueChange={setSelectedProvince}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select province" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="western-cape">Western Cape</SelectItem>
-                    <SelectItem value="gauteng">Gauteng</SelectItem>
-                    <SelectItem value="kwazulu-natal">KwaZulu-Natal</SelectItem>
-                    <SelectItem value="eastern-cape">Eastern Cape</SelectItem>
-                    <SelectItem value="limpopo">Limpopo</SelectItem>
-                    <SelectItem value="mpumalanga">Mpumalanga</SelectItem>
-                    <SelectItem value="north-west">North West</SelectItem>
-                    <SelectItem value="northern-cape">Northern Cape</SelectItem>
-                    <SelectItem value="free-state">Free State</SelectItem>
+                  <SelectContent className="bg-card border border-border shadow-lg z-50">
+                    <SelectItem value="all">All Provinces</SelectItem>
+                    <SelectItem value="Western Cape">Western Cape</SelectItem>
+                    <SelectItem value="Gauteng">Gauteng</SelectItem>
+                    <SelectItem value="KwaZulu-Natal">KwaZulu-Natal</SelectItem>
+                    <SelectItem value="Eastern Cape">Eastern Cape</SelectItem>
+                    <SelectItem value="Limpopo">Limpopo</SelectItem>
+                    <SelectItem value="Mpumalanga">Mpumalanga</SelectItem>
+                    <SelectItem value="North West">North West</SelectItem>
+                    <SelectItem value="Northern Cape">Northern Cape</SelectItem>
+                    <SelectItem value="Free State">Free State</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
             
-            <Button size="lg" className="w-full bg-secondary hover:bg-secondary/90">
+            <Button 
+              size="lg" 
+              className="w-full bg-secondary hover:bg-secondary/90"
+              onClick={handleSearch}
+            >
               <Search className="h-5 w-5 mr-2" />
               Search Universities & Courses
             </Button>
@@ -122,6 +147,17 @@ const HeroSection = () => {
             </CardContent>
           </Card>
         </div>
+
+        {/* Search Results */}
+        {showResults && (
+          <div className="bg-background rounded-lg p-6 mt-8">
+            <SearchResults 
+              query={searchQuery}
+              selectedField={selectedField}
+              selectedProvince={selectedProvince}
+            />
+          </div>
+        )}
       </div>
     </section>
   );
