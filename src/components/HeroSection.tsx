@@ -6,8 +6,19 @@ import { GraduationCap, Search, BookOpen, Award } from "lucide-react";
 
 const HeroSection = () => {
   return (
-    <section className="bg-gradient-hero text-white py-16 md:py-24">
-      <div className="container mx-auto px-4">
+    <section className="relative bg-gradient-hero text-white py-16 md:py-24 overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+          alt="Students studying with laptops"
+          className="w-full h-full object-cover opacity-20"
+        />
+        <div className="absolute inset-0 bg-gradient-hero opacity-90"></div>
+      </div>
+      
+      {/* Content */}
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12 animate-fade-in">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
             Find Your Perfect 
